@@ -1,0 +1,33 @@
+{
+	"name": "gulp_bem",
+	"version": "3.0.0",
+	"author": "Murat <legendofpain5112@gmail.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"browser-sync": "^3.0.2",
+		"del": "6.0.0",
+		"gulp": "^5.0.0",
+		"gulp-autoprefixer": "^8.0.0",
+		"gulp-clean-css": "^4.3.0",
+		"gulp-file-include": "^2.3.0",
+		"gulp-flatten": "^0.4.0",
+		"gulp-group-css-media-queries": "^1.2.2",
+		"gulp-htmlmin": "^5.0.1",
+		"gulp-if": "^3.0.0",
+		"gulp-notify": "^5.0.0",
+		"gulp-plumber": "^1.2.1",
+		"gulp-pug": "^5.0.0",
+		"gulp-rename": "^2.0.0",
+		"gulp-sass": "^5.1.0",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-svg-sprite": "2.0.3",
+		"gulp-uglify": "^3.0.2",
+		"prettier": "^3.3.3",
+		"sass": "^1.83.0"
+	},
+	"scripts": {
+		"dev": "gulp",
+		"build": "set NODE_ENV=prod && gulp build",
+		"preview": "gulp preview"
+	}
+}
