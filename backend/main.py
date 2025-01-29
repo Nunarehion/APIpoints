@@ -47,7 +47,7 @@ class PaymentHistory(db.Model):
         'payment.id'), nullable=False)
 
 
-def format_data(model, query_result, exclude_columns=['id']):
+def format_data(model, query_result, exclude_columns=[]):
     headers = [
         column.name for column in model.__table__.columns if column.name not in exclude_columns]
     rows = [[getattr(item, column) for column in headers]
@@ -82,6 +82,16 @@ def manage_users():
     return jsonify(response_data)
 
 
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({'message': 'User deleted successfully'}), 200
+
+
 @app.route('/products', methods=['GET', 'POST'])
 def manage_products():
     if request.method == 'POST':
@@ -102,6 +112,16 @@ def manage_products():
     return jsonify(format_data(Product, products))
 
 
+@app.route('/products/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    product = Product.query.get(product_id)
+    if not product:
+        return jsonify({'error': 'Product not found'}), 404
+    db.session.delete(product)
+    db.session.commit()
+    return jsonify({'message': 'Product deleted successfully'}), 200
+
+
 @app.route('/cards', methods=['GET', 'POST'])
 def manage_cards():
     if request.method == 'POST':
@@ -119,6 +139,16 @@ def manage_cards():
     return jsonify(format_data(Card, cards))
 
 
+@app.route('/cards/<int:card_id>', methods=['DELETE'])
+def delete_card(card_id):
+    card = Card.query.get(card_id)
+    if not card:
+        return jsonify({'error': 'Card not found'}), 404
+    db.session.delete(card)
+    db.session.commit()
+    return jsonify({'message': 'Card deleted successfully'}), 200
+
+
 @app.route('/payments', methods=['GET', 'POST'])
 def manage_payments():
     if request.method == 'POST':
@@ -134,6 +164,16 @@ def manage_payments():
         return jsonify({'id': new_payment.id, 'amount': new_payment.amount, 'payment_method': new_payment.payment_method, 'transaction_id': new_payment.transaction_id, 'user_id': new_payment.user_id}), 201
     payments = Payment.query.all()
     return jsonify(format_data(Payment, payments))
+
+
+@app.route('/payments/<int:payment_id>', methods=['DELETE'])
+def delete_payment(payment_id):
+    payment = Payment.query.get(payment_id)
+    if not payment:
+        return jsonify({'error': 'Payment not found'}), 404
+    db.session.delete(payment)
+    db.session.commit()
+    return jsonify({'message': 'Payment deleted successfully'}), 200
 
 
 @app.route('/payment_history', methods=['GET'])
