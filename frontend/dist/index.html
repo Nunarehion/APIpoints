@@ -1,12 +1,187 @@
-<!DOCTYPE html><html><head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="./assets/css/main.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-<script src="./assets/js/main.js" defer></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="//unpkg.com/alpinejs" defer></script>
-<title>API points</title>
-</head><body><div class="app" x-data="dataStore"><div class="sidebar bg-slate-700 text-slate-200"><div class="title p-4 font-bold text-2xl">API points</div><div class="list grid auto-rows-auto"><div class="item flex p-4 hover:text-rose-500" :class="'Users' == window.state ? 'bg-[#00000022]' : ''" @click.prevent="window.setState('Users'); getUsers();"><div class="decor w-2 rounded" :class="'Users' == window.state ? 'bg-rose-500' : ''"></div><a class="ml-2 undefined">Users</a></div><div class="item flex p-4 hover:text-rose-500" :class="'Products' == window.state ? 'bg-[#00000022]' : ''" @click.prevent="window.setState('Products'); getProducts();"><div class="decor w-2 rounded" :class="'Products' == window.state ? 'bg-rose-500' : ''"></div><a class="ml-2 undefined">Products</a></div><div class="item flex p-4 hover:text-rose-500" :class="'Cards' == window.state ? 'bg-[#00000022]' : ''" @click.prevent="window.setState('Cards'); getCards();"><div class="decor w-2 rounded" :class="'Cards' == window.state ? 'bg-rose-500' : ''"></div><a class="ml-2 undefined">Cards</a></div><div class="item flex p-4 hover:text-rose-500" :class="'Payments' == window.state ? 'bg-[#00000022]' : ''" @click.prevent="window.setState('Payments'); getPayments();"><div class="decor w-2 rounded" :class="'Payments' == window.state ? 'bg-rose-500' : ''"></div><a class="ml-2 undefined">Payments</a></div><div class="item flex p-4 hover:text-rose-500" :class="'Payment History' == window.state ? 'bg-[#00000022]' : ''" @click.prevent="window.setState('Payment History'); getUsers();"><div class="decor w-2 rounded" :class="'Payment History' == window.state ? 'bg-rose-500' : ''"></div><a class="ml-2 undefined">Payment History</a></div></div></div><div class="window h-[100vh] overflow-scroll w-full p-4 bg-gray-100"><div class="form-container p-4"><h2 class="title text-4xl font-bold" x-text="window.state"></h2><div class="if" x-show="window.state == 'Users'"><form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="users"><input type="hidden" name="formName" value="users"/><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="">name</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="name" id="" placeholder="Введите имя"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="">email</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="email" id="" placeholder="Ведите email"/></div><button class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]" type="submit">Сохранить</button></form></div><div class="if" x-show="window.state === 'Products'"><form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="products"><input type="hidden" name="formName" value="products"/><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="">name</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="name" id="" placeholder="Наименование продукта"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="">Description</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="description" id="" placeholder="Описание продукта"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="0.01">Price</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="price" id="0.01" placeholder="Цена"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="1">Quantity</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="quantity" id="1" placeholder="Количество"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="">Category</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="category" id="" placeholder="Категория"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="">SKU</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="sku" id="" placeholder="Артикул"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="">Image</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="image" id="" placeholder="Изображение"/></div><button class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]" type="submit">Сохранить</button></form></div><div class="if" x-show="window.state === 'Cards'"><form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="cards"><input type="hidden" name="formName" value="cards"/><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="cardNumber">card_number</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="card_number" id="cardNumber" placeholder="Введите номер карты"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="cardholderName">cardholder_name</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="cardholder_name" id="cardholderName" placeholder="Введите имя владельца карты"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="expirationDate">expiration_date</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="expiration_date" id="expirationDate" placeholder="MM/YY"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="cvv">CVV</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500" type="text" name="cvv" id="cvv" placeholder="Введите CVV"/></div><button class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]" type="submit">Сохранить</button></form></div><div class="if" x-show="window.state === 'Payments'"><form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="payments"><input type="hidden" name="formName" value="payments"/><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="paymentAmount">amount</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full" type="number" name="amount" id="paymentAmount" placeholder="Введите сумму платежа"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="paymentMethod">payment_method</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full" type="text" name="payment_method" id="paymentMethod" placeholder="Выберите способ оплаты"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="transactionId">transaction_id</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full" type="text" name="transaction_id" id="transactionId" placeholder="Введите ID транзакции"/></div><div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label class="italic text-gray-500" for="transactionId">user_id</label><input class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full" type="text" name="user_id" id="transactionId" placeholder="Введите user id"/></div><button class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]" type="submit">Сохранить</button></form></div><div class="panel flex-col md:flex-row md:flex"><a class="url block bg-green-300 p-4 m-4 rounded-xl text-white" x-text="window.dataTable[window.state].fullUrl" :href="window.dataTable[window.state].fullUrl"></a><button class="p-4 m-auto md:m-4 text-white rounded-xl bg-sky-500 active:scale-[0.98]" @click.prevent="getAll()"> <span>RELOAD</span></button></div></div><table class="w-full border-separate bg-slate-700" x-data="{rows: window.dataTabel[window.state].rows, head: window.dataTabel[window.state].head}"><thead class="grid hidden md:table-row"><!--.test(x-text="window.dataTable" class="absolute bg-blue-500 p-4 text-white")--><template x-for="(data, index) in window.dataTable[window.state].head"><th class="text-left pl-6 p-2 bg-slate-700 text-slate-200" x-text="data"></th></template></thead><tbody class="bg-slate-600 text-slate-300"><template x-for="row in window.dataTable[window.state].rows"><tr class="md:table-row  grid grid-cols-1 m-2 my-4 shadow-md rounded-xl overflow-hidden"><template x-for="(row, index) in row" :key="index"><td class="md:inline-block grid-cols-[0.75fr_1fr] md:table-cell  grid p-2 gap-2"><span class="md:hidden  shadow p-2 rounded bg-slate-700 text-slate-200" x-text="window.dataTable[window.state].head[index]"></span><span class="p-2" x-text="row"></span></td></template></tr></template></tbody></table></div></div></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <script src="./assets/js/main.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <title>API points</title>
+</head>
+
+<body>
+    <div class="app" x-data="dataStore">
+        <div class="sidebar bg-slate-700 text-slate-200">
+            <div class="title p-4 font-bold text-2xl">API points</div>
+            <div class="list grid auto-rows-auto">
+                <div class="item flex p-4 hover:text-rose-500" :class="'Users' == window.state ? 'bg-[#00000022]' : ''"
+                    @click.prevent="window.setState('Users'); getUsers();">
+                    <div class="decor w-2 rounded" :class="'Users' == window.state ? 'bg-rose-500' : ''"></div><a
+                        class="ml-2 undefined">Users</a>
+                </div>
+                <div class="item flex p-4 hover:text-rose-500"
+                    :class="'Products' == window.state ? 'bg-[#00000022]' : ''"
+                    @click.prevent="window.setState('Products'); getProducts();">
+                    <div class="decor w-2 rounded" :class="'Products' == window.state ? 'bg-rose-500' : ''"></div><a
+                        class="ml-2 undefined">Products</a>
+                </div>
+                <div class="item flex p-4 hover:text-rose-500" :class="'Cards' == window.state ? 'bg-[#00000022]' : ''"
+                    @click.prevent="window.setState('Cards'); getCards();">
+                    <div class="decor w-2 rounded" :class="'Cards' == window.state ? 'bg-rose-500' : ''"></div><a
+                        class="ml-2 undefined">Cards</a>
+                </div>
+                <div class="item flex p-4 hover:text-rose-500"
+                    :class="'Payments' == window.state ? 'bg-[#00000022]' : ''"
+                    @click.prevent="window.setState('Payments'); getPayments();">
+                    <div class="decor w-2 rounded" :class="'Payments' == window.state ? 'bg-rose-500' : ''"></div><a
+                        class="ml-2 undefined">Payments</a>
+                </div>
+                <div class="item flex p-4 hover:text-rose-500"
+                    :class="'Payment History' == window.state ? 'bg-[#00000022]' : ''"
+                    @click.prevent="window.setState('Payment History'); getUsers();">
+                    <div class="decor w-2 rounded" :class="'Payment History' == window.state ? 'bg-rose-500' : ''">
+                    </div><a class="ml-2 undefined">Payment History</a>
+                </div>
+            </div>
+        </div>
+        <div class="window h-[100vh] overflow-scroll w-full p-4 bg-gray-100">
+            <div class="form-container p-4">
+                <h2 class="title text-4xl font-bold" x-text="window.state"></h2>
+                <div class="if" x-show="window.state == 'Users'">
+                    <form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="users"><input
+                            type="hidden" name="formName" value="users" />
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="">name</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="name" id="" placeholder="Введите имя" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="">email</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="email" id="" placeholder="Ведите email" /></div><button
+                            class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]"
+                            type="submit">Сохранить</button>
+                    </form>
+                </div>
+                <div class="if" x-show="window.state === 'Products'">
+                    <form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="products"><input
+                            type="hidden" name="formName" value="products" />
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="">name</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="name" id="" placeholder="Наименование продукта" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="">Description</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="description" id="" placeholder="Описание продукта" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="0.01">Price</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="price" id="0.01" placeholder="Цена" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="1">Quantity</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="quantity" id="1" placeholder="Количество" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="">Category</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="category" id="" placeholder="Категория" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="">SKU</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="sku" id="" placeholder="Артикул" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="">Image</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="image" id="" placeholder="Изображение" /></div><button
+                            class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]"
+                            type="submit">Сохранить</button>
+                    </form>
+                </div>
+                <div class="if" x-show="window.state === 'Cards'">
+                    <form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="cards"><input
+                            type="hidden" name="formName" value="cards" />
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="cardNumber">card_number</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="card_number" id="cardNumber" placeholder="Введите номер карты" />
+                        </div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="cardholderName">cardholder_name</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="cardholder_name" id="cardholderName"
+                                placeholder="Введите имя владельца карты" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="expirationDate">expiration_date</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="expiration_date" id="expirationDate" placeholder="MM/YY" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="cvv">CVV</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500"
+                                type="text" name="cvv" id="cvv" placeholder="Введите CVV" /></div><button
+                            class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]"
+                            type="submit">Сохранить</button>
+                    </form>
+                </div>
+                <div class="if" x-show="window.state === 'Payments'">
+                    <form class="p-4 flex flex-col grid-rows-1 grid-cols-2 gap-4 md:grid" name="payments"><input
+                            type="hidden" name="formName" value="payments" />
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="paymentAmount">amount</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full"
+                                type="number" name="amount" id="paymentAmount" placeholder="Введите сумму платежа" />
+                        </div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="paymentMethod">payment_method</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full"
+                                type="text" name="payment_method" id="paymentMethod"
+                                placeholder="Выберите способ оплаты" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="transactionId">transaction_id</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full"
+                                type="text" name="transaction_id" id="transactionId"
+                                placeholder="Введите ID транзакции" /></div>
+                        <div class="panel grid grid-row-2 gap-2 bg-gray-50 p-4 rounded-xl"><label
+                                class="italic text-gray-500" for="transactionId">user_id</label><input
+                                class="border border-solid border-gray-300 rounded focus:border-gray-400 p-2 text-gray-500 w-full"
+                                type="text" name="user_id" id="transactionId" placeholder="Введите user id" /></div>
+                        <button
+                            class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]"
+                            type="submit">Сохранить</button>
+                    </form>
+                </div>
+                <div class="panel flex-col md:flex-row md:flex"><a
+                        class="url block bg-green-300 p-4 m-4 rounded-xl text-white"
+                        x-text="window.dataTable[window.state].fullUrl"
+                        :href="window.dataTable[window.state].fullUrl"></a><button
+                        class="p-4 m-auto md:m-4 text-white rounded-xl bg-sky-500 active:scale-[0.98]"
+                        @click.prevent="getAll()"> <span>RELOAD</span></button></div>
+            </div>
+            <table class="w-full border-separate bg-slate-700"
+                x-data="{rows: window.dataTabel[window.state].rows, head: window.dataTabel[window.state].head}">
+                <thead class="grid hidden md:table-row">
+                    <!--.test(x-text="window.dataTable" class="absolute bg-blue-500 p-4 text-white")--><template
+                        x-for="(data, index) in window.dataTable[window.state].head">
+                        <th class="text-left pl-6 p-2 bg-slate-700 text-slate-200" x-text="data"></th>
+                    </template></thead>
+                <tbody class="bg-slate-600 text-slate-300"><template x-for="row in window.dataTable[window.state].rows">
+                        <tr class="md:table-row  grid grid-cols-1 m-2 my-4 shadow-md rounded-xl overflow-hidden">
+                            <template x-for="(row, index) in row" :key="index">
+                                <td class="md:inline-block grid-cols-[0.75fr_1fr] md:table-cell  grid p-2 gap-2"><span
+                                        class="md:hidden  shadow p-2 rounded bg-slate-700 text-slate-200"
+                                        x-text="window.dataTable[window.state].head[index]"></span><span class="p-2"
+                                        x-text="row"></span></td>
+                            </template></tr>
+                    </template></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
