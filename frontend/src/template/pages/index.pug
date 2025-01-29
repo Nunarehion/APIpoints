@@ -1,0 +1,143 @@
+//- src/template/pages/index.pug
+//- //Admin Panel
+mixin link(text, callback="", href, classes)
+  //- //.test(x-text=`["${text}" ,window.state]`)
+  .item(
+    class="flex p-4 hover:text-rose-500",
+    :class=`'${text}' == window.state ? 'bg-[#00000022]' : ''`,
+    @click.prevent=`window.setState('${text}'); ${callback};`
+  )
+    .decor(class="w-2 rounded" :class=`'${text}' == window.state ? 'bg-rose-500' : ''`)
+    a.ml-2(href=href, class=`${classes}`)&attributes(attributes)| #{text}
+
+mixin button-submit(text="Сохранить")
+  button(
+    class="col-span-2 mr-auto mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded active:scale-[0.98]"
+    type="submit"
+  ) #{text}
+
+//- //Tail-wind Aleases
+- var border = 'border border-solid border-gray-300';
+
+mixin sidebar
+  .sidebar(class=`bg-slate-700 text-slate-200`)
+    .title.p-4.font-bold.text-2xl API points
+    .list.grid.auto-rows-auto
+      +link("Users", "getUsers()")
+      +link("Products", "getProducts()")
+      +link("Cards", "getCards()")
+      +link("Payments", "getPayments()")
+      +link("Payment History", "getUsers()")
+  block
+
+mixin form(name)
+  form.p-4.flex.flex-col.grid-rows-1.grid-cols-2.gap-4(class="md:grid" name=name)
+    input(type="hidden" name="formName" value=name)
+    block
+    
+mixin form-field(labelText, placeholder='', name='', id='', type='text', classes='')
+  .panel.grid.grid-row-2.gap-2.bg-gray-50.p-4.rounded-xl
+    label.italic.text-gray-500(for=id) #{labelText}
+    input(
+      class=`${border} rounded focus:border-gray-400 p-2 text-gray-500`,
+      type=type,
+      name=labelText.toLowerCase(),
+      id=id,
+      placeholder=placeholder,
+      class=`${classes}`
+    )
+
+mixin form-user
+  +form('users')
+    +form-field("name", "Введите имя")
+    +form-field("email", "Ведите email")
+    +button-submit
+
+mixin form-product
+  +form('products')
+    +form-field("name", "Наименование продукта")
+    +form-field("Description", "Описание продукта")
+    +form-field("Price", "Цена", type="number", step="0.01")
+    +form-field("Quantity", "Количество", type="number", min="1")
+    +form-field("Category", "Категория")
+    +form-field("SKU", "Артикул")
+    +form-field("Image", "Изображение", type="file")
+    +button-submit
+
+mixin form-card
+  +form('cards')
+    +form-field("card_number", "Введите номер карты", "cardNumber", "cardNumber", "text")
+    +form-field("cardholder_name", "Введите имя владельца карты", "cardholderName", "cardholderName", "text")
+    +form-field("expiration_date", "MM/YY", "expirationDate", "expirationDate", "text")
+    +form-field("CVV", "Введите CVV", "cvv", "cvv", "text")
+    +button-submit
+
+mixin form-payments
+  +form('payments')
+    +form-field("amount", "Введите сумму платежа", "paymentAmount", "paymentAmount", "number", "w-full")
+    +form-field("payment_method", "Выберите способ оплаты", "paymentMethod", "paymentMethod", "text", "w-full")
+    +form-field("transaction_id", "Введите ID транзакции", "transactionId", "transactionId", "text", "w-full")
+    +form-field("user_id", "Введите user id", "userId", "transactionId", "text", "w-full")
+    +button-submit
+
+mixin form-screen
+  .if(x-show="window.state == 'Users'")
+    +form-user
+  .if(x-show="window.state === 'Products'")
+    +form-product
+  .if(x-show="window.state === 'Cards'")
+    +form-card
+  .if(x-show="window.state === 'Payments'")
+    +form-payments
+
+mixin table-row()
+  tr(class="md:table-row  grid grid-cols-1 m-2 my-4 shadow-md rounded-xl overflow-hidden")
+    template(x-for="(row, index) in row", :key="index")
+      td(class="md:inline-block grid-cols-[0.75fr_1fr] md:table-cell  grid p-2 gap-2")
+        span(class="md:hidden  shadow p-2 rounded bg-slate-700 text-slate-200" x-text="window.dataTable[window.state].head[index]")
+        span.p-2(x-text="row")
+
+mixin table-head
+  thead.grid.hidden(class="md:table-row")
+    //.test(x-text="window.dataTable" class="absolute bg-blue-500 p-4 text-white")
+    template(x-for="(data, index) in window.dataTable[window.state].head")
+      th(class="text-left pl-6 p-2 bg-slate-700 text-slate-200" x-text="data")
+
+mixin table
+  table(
+    class="w-full border-separate bg-slate-700"
+    x-data="{rows: window.dataTabel[window.state].rows, head: window.dataTabel[window.state].head}"
+  )
+    +table-head
+    tbody(class="bg-slate-600 text-slate-300")
+        template(x-for="row in window.dataTable[window.state].rows")
+          +table-row
+
+mixin window
+  .window(class="h-[100vh] overflow-scroll w-full p-4 bg-gray-100")
+    .form-container.p-4
+      h2.title(x-text="window.state" class="text-4xl font-bold")
+      +form-screen
+      .panel(class="flex-col md:flex-row md:flex")
+        a.url(class="block bg-green-300 p-4 m-4 rounded-xl text-white" 
+              x-text="window.dataTable[window.state].fullUrl"
+              :href="window.dataTable[window.state].fullUrl")
+        button(class="p-4 m-auto md:m-4 text-white rounded-xl bg-sky-500 active:scale-[0.98]" @click.prevent="getAll()" ) 
+          span| RELOAD
+          //- <svg class="flex-none w-5 text-white hover:animate-spin transition " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.605 512.605" style="enable-background:new 0 0 512.605 512.605;" xml:space="preserve" fill="currentColor"><path d="M499.744,286.767c-8.672-1.744-17.104,3.872-18.832,12.544C459.856,404.175,364.288,480.303,253.68,480.303c-89.648,0-170.752-50.048-209.024-128H160c8.832,0,16-7.168,16-16c0-8.832-7.168-16-16-16H16c-8.832,0-16,7.168-16,16v144c0,8.832,7.168,16,16,16c8.832,0,16-7.168,16-16v-85.728c47.952,72.56,131.04,117.728,221.68,117.728c125.792,0,234.544-86.944,258.608-206.704C514.032,296.927,508.416,288.511,499.744,286.767z"/><path d="M12.864,225.839c1.056,0.208,2.112,0.32,3.168,0.32c7.472,0,14.144-5.248,15.664-12.848C52.752,108.431,148.32,32.303,258.912,32.303c89.648,0,170.752,50.032,209.04,128H352c-8.832,0-16,7.168-16,16c0,8.832,7.168,16,16,16h144c8.832,0,16-7.168,16-16v-144c0-8.832-7.168-16-16-16c-8.832,0-16,7.168-16,16v84.88C431.952,45.119,349.2,0.303,258.912,0.303C133.12,0.303,24.368,87.247,0.32,207.007C-1.424,215.679,4.192,224.095,12.864,225.839z"/></svg>
+          
+    +table
+
+
+mixin app
+  .app(class="", x-data="dataStore")
+    //- .test(class="p-4 w-full absolute bg-red-500 text-white" x-text="JSON.stringify(window)")
+    +sidebar
+    +window
+
+
+doctype html
+html
+  include ../../assets/pug/template/html__head.pug
+  body
+    +app
